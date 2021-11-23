@@ -2,6 +2,8 @@ package com.capgemini.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.JoinColumn;
+
 public class Trainee {
 	private Integer traineeId;
 	private String userName;
@@ -13,6 +15,7 @@ public class Trainee {
 	private String familyInfo;
 	private long aadharNo;
 	private LocalDate dob;
+	@JoinColumn
 	private TrainingCourse trainingCourse;
 	private FeedBack feedBack;
 	public Trainee() {

@@ -6,7 +6,7 @@ import com.capgemini.model.Trainee;
 
 
 
-public interface ITraineeDao {
+public interface ITraineeRepository {
 	Trainee addTrainee(Trainee course);
 
 	Trainee updateTrainee(Trainee course);

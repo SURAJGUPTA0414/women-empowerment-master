@@ -6,7 +6,7 @@ import com.capgemini.model.TrainingCourse;
 
 
 
-public interface ITrainingCourseDao {
+public interface ITrainingCourseRepository {
 	TrainingCourse addTrainingCourse(TrainingCourse course);
 
 	TrainingCourse updateTrainingCourse(TrainingCourse course);

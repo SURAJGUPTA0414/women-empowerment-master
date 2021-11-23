@@ -13,8 +13,6 @@ import javax.persistence.Table;
 public class FeedBack {
 	@Id //primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	@Column
 	private int feedBackId;
 	
 	@Column

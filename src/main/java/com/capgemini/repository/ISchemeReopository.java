@@ -7,7 +7,7 @@ import com.capgemini.model.Scheme;
 
 
 
-public interface ISchemeDao {
+public interface ISchemeReopository {
 	Scheme addScheme(Scheme scheme);
 
 	Scheme updateScheme(Scheme scheme);

@@ -7,45 +7,52 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capgemini.model.FeedBack;
-import com.capgemini.repository.IFeedBackDao;
+import com.capgemini.repository.IFeedBackRepository;
 
 
 
-public class FeedBackService  implements IFeedBackService{
+
+public class FeedBackService implements IFeedBackService{
 	
 	private static final Logger LOG = LoggerFactory.getLogger(FeedBackService.class);
 	 
 	@Autowired
-	private IFeedBackDao ifeedbackdao;
+	private IFeedBackRepository ifeedbackrepository;
 	@Override
 	public List<FeedBack> viewAllFeedBack() {
 		System.out.println("Service getAllEmployees");
-		return ifeedbackdao.findAll();
+		return ifeedbackrepository.findAll();
 	}
 	@Override
 	public FeedBack addFeedBack(FeedBack feedback) {
 		// TODO Auto-generated method stub
-		return null;
+		return ifeedbackrepository.save(feedback);
 	}
 	@Override
 	public FeedBack updateFeedBack(FeedBack feedback) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+			if (ifeedbackrepository.existsById(feedback.getFeedBackId())) {
+				return ifeedbackrepository.save(feedback);
+			} else {
+//				throw new NGONotFoundException(ngo.getNgoId()+" this employee is not found.");
+			}
+			return feedback;
+		}
+		
+	
 	@Override
 	public FeedBack viewFeedBack(int feedbackId) {
 		// TODO Auto-generated method stub
-		return null;
+		return ifeedbackrepository.viewFeedBack(feedbackId);
 	}
 	@Override
 	public List<FeedBack> viewFeedBackBySchemeName() {
 		// TODO Auto-generated method stub
-		return null;
+		return ifeedbackrepository.viewFeedBackBySchemeName();
 	}
 	@Override
 	public List<FeedBack> viewFeedBackByTrainingCourseName() {
 		// TODO Auto-generated method stub
-		return null;
+		return ifeedbackrepository.viewFeedBackByTrainingCourseName();
 	}
 
 
