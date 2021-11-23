@@ -15,7 +15,7 @@ public interface IFeedBackDao extends JpaRepository<FeedBack, Integer>{
 
 	FeedBack viewFeedBack(int feedbackId);
 
-	List<FeedBack> viewAllFeedBack();
+	List<FeedBack> findAll();
 
 	List<FeedBack> viewFeedBackBySchemeName();
 
