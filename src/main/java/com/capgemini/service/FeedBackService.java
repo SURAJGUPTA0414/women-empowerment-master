@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capgemini.model.FeedBack;
 import com.capgemini.repository.IFeedBackDao;
-import com.cg.spring.boot.demo.repository.EmployeeRepository;
 
 
 
@@ -22,6 +21,31 @@ public class FeedBackService  implements IFeedBackService{
 	public List<FeedBack> viewAllFeedBack() {
 		System.out.println("Service getAllEmployees");
 		return ifeedbackdao.findAll();
+	}
+	@Override
+	public FeedBack addFeedBack(FeedBack feedback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public FeedBack updateFeedBack(FeedBack feedback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public FeedBack viewFeedBack(int feedbackId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<FeedBack> viewFeedBackBySchemeName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<FeedBack> viewFeedBackByTrainingCourseName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
