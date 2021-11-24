@@ -38,12 +38,9 @@ public class FeedBack {
 //	
 //	@Column
 //	private Scheme scheme;
-	
 
-	
 	public FeedBack() {
 		super();
-		
 	}
 
 	public FeedBack(int feedBackId, int schemeRating, int schemeTrainingRating, int overallRating, String comments,
@@ -55,11 +52,6 @@ public class FeedBack {
 		this.overallRating = overallRating;
 		this.comments = comments;
 		this.feedbackdate = feedbackdate;
-//		this.user = user;
-//		this.training = training;
-//		this.scheme = scheme;
-//		
-		
 	}
 
 	public int getFeedBackId() {
@@ -116,38 +108,11 @@ public class FeedBack {
 				+ schemeTrainingRating + ", overallRating=" + overallRating + ", comments=" + comments
 				+ ", feedbackdate=" + feedbackdate + "]";
 	}
+	
 
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
-//
-//	public TrainingCourse getTraining() {
-//		return training;
-//	}
-//
-//	public void setTraining(TrainingCourse training) {
-//		this.training = training;
-//	}
-//
-//	public Scheme getScheme() {
-//		return scheme;
-//	}
-//
-//	public void setScheme(Scheme scheme) {
-//		this.scheme = scheme;
-//	}
+	
 
-//	@Override
-//	public String toString() {
-//		return "FeedBack [feedBackId=" + feedBackId + ", schemeRating=" + schemeRating + ", schemeTrainingRating="
-//				+ schemeTrainingRating + ", overallRating=" + overallRating + ", comments=" + comments
-//				+ ", feedbackdate=" + feedbackdate + ", user=" + user + ", training=" + training + ", scheme=" + scheme
-//				+ "]";
-//	}
+	
 	
 	
 }

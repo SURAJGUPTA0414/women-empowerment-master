@@ -1,6 +1,5 @@
 package com.capgemini.controller;
 
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,16 +16,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capgemini.exception.FeedBackNotFoundException;
-import com.capgemini.exception.InvalidFieldException;
+
+
 import com.capgemini.model.FeedBack;
-import com.capgemini.service.FeedBackService;
+
 import com.capgemini.service.IFeedBackService;
 
 
-// This is a comment.  
-
-//@Component
 @RestController
 public class FeedbackController {
 
@@ -34,92 +30,93 @@ public class FeedbackController {
 
 	@Autowired
 	private IFeedBackService feedbackService;
-//	public ResponseEntity<Trainee>
+
 	@PostMapping(path = "/feedback")
-	public ResponseEntity<FeedBack> addFeedBack(@RequestBody FeedBack course)
-			throws  FeedBackNotFoundException {
+	public ResponseEntity<FeedBack> addFeedBack(@RequestBody FeedBack course)  {
+		LOG.info("Controller addFeedBack");
 		ResponseEntity<FeedBack> response = null;
-		FeedBack f = feedbackService.addFeedBack(course);
-		System.out.println("FeedBack add");
+		FeedBack addFeedBack = feedbackService.addFeedBack(course);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "FeedBack added to database");
-		response = new ResponseEntity<FeedBack>(f, headers, HttpStatus.CREATED);
+		response = new ResponseEntity<FeedBack>(addFeedBack, headers, HttpStatus.CREATED);
 		return response;
 	}
-	
+
+	// -------------------------------------------------------------------------------------------
 	// http://localhost:8082/updateempfeedback
-		@PutMapping("/updatefeedback")
-		public ResponseEntity<FeedBack> updateFeedBack(@RequestBody FeedBack feedback) {
-			LOG.info("updateTrainee");
-			FeedBack updateFeedBack = feedbackService.updateFeedBack(feedback);
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("message", ""+ feedback +" updated successfully");
-			LOG.info(headers.toString());
-			ResponseEntity<FeedBack> response = new ResponseEntity<FeedBack>(updateFeedBack, headers, HttpStatus.OK);
-			return response;
-		}
-	
-		@GetMapping("/viewfeedbackByfeedbackId")
-		public ResponseEntity<FeedBack> viewFeedBack(int feedbackId) {
-			LOG.info("viewTraineeByCourseId");
-			FeedBack viewfeedbackByfeedbackId= feedbackService.viewFeedBack(feedbackId);
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("message", "feedback with "+ feedbackId + " retrived successfully from the database");
-			LOG.info(headers.toString());
-			ResponseEntity<FeedBack> response = new ResponseEntity<FeedBack>(viewfeedbackByfeedbackId, headers, HttpStatus.OK);
-			return response;
-		}
+	@PutMapping("/updatefeedback")
+	public ResponseEntity<FeedBack> updateFeedBack(@RequestBody FeedBack feedback) {
+		LOG.info("Controller updateFeedBack");
+		FeedBack updateFeedBack = feedbackService.updateFeedBack(feedback);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "" + feedback + " updated successfully");
+		LOG.info(headers.toString());
+		ResponseEntity<FeedBack> response = new ResponseEntity<FeedBack>(updateFeedBack, headers, HttpStatus.OK);
+		return response;
+	}
+	// -------------------------------------------------------------------------------------------
 
-		@GetMapping("/viewFeedBackBySchemeName")
-		public ResponseEntity<List<FeedBack>> viewFeedBackBySchemeName(String SchemeName) {
-			LOG.info("viewTraineeByCourseId");
-			List<FeedBack> viewFeedBackBySchemeName= feedbackService.viewFeedBackBySchemeName();
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("message", "Data of feedback with "+ SchemeName + " retrived successfully from the database");
-			LOG.info(headers.toString());
-			ResponseEntity<List<FeedBack>> response = new ResponseEntity<List<FeedBack>>(viewFeedBackBySchemeName, headers, HttpStatus.OK);
-			return response;
-		}
-		
-		@GetMapping("/viewFeedBackByTrainingCourseName")
-		public ResponseEntity<List<FeedBack>> viewFeedBackByTrainingCourseName(String TrainingCourseName) {
-			LOG.info("viewTraineeByCourseId");
-			List<FeedBack> viewTraineeByFeedBack= feedbackService.viewFeedBackByTrainingCourseName();
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("message", "Data of feedback with "+ TrainingCourseName + " retrived successfully from the database");
-			LOG.info(headers.toString());
-			ResponseEntity<List<FeedBack>> response = new ResponseEntity<>(viewTraineeByFeedBack, headers, HttpStatus.OK);
-			return response;
-		}
-
+	@GetMapping("/viewFeedBack/{feedBackId}")
+	public ResponseEntity<FeedBack> viewFeedBack(@PathVariable(name="feedBackId") int feedbackId) {
+		LOG.info("Controller viewFeedBack");
+		FeedBack viewFeedBack = feedbackService.viewFeedBack(feedbackId);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "feedback with " + feedbackId + " retrived successfully from the database");
+		LOG.info(headers.toString());
+		ResponseEntity<FeedBack> response = new ResponseEntity<FeedBack>(viewFeedBack, headers,
+				HttpStatus.OK);
+		return response;
+	}
+	// -------------------------------------------------------------------------------------------
 	@GetMapping("/viewAllfeedback")
-	public ResponseEntity<List<FeedBack>> viewAllFeedBack() 
-	{
-		LOG.info("viewAllTraineesByLocation");
-		List<FeedBack> viewAllFeedBacks=feedbackService.viewAllFeedBack();
+	public ResponseEntity<List<FeedBack>> viewAllFeedBack() {
+		LOG.info("Controller viewAllFeedBack");
+		List<FeedBack> viewAllFeedBack = feedbackService.viewAllFeedBack();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "All feedback data retrieved successfully from the database.");
 		LOG.info(headers.toString());
-		ResponseEntity<List<FeedBack>> response = new ResponseEntity<>(viewAllFeedBacks, headers, HttpStatus.OK);
-		return response; 
-	}
-
-
-	
-
-	
-	@GetMapping("/viewFeedBackByTrainingCourseName")
-	public ResponseEntity<FeedBack> viewFeedBack(String TrainingCourseName) {
-		LOG.info("viewTraineeByCourseId");
-		FeedBack viewTraineeByFeedBack= feedbackService.viewFeedBackByTrainingCourseName();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("message", "Data of feedback with "+ TrainingCourseName + " retrived successfully from the database");
-		LOG.info(headers.toString());
-		ResponseEntity<FeedBack> response = new ResponseEntity<FeedBack>(viewTraineeByFeedBack, headers, HttpStatus.OK);
+		ResponseEntity<List<FeedBack>> response = new ResponseEntity<>(viewAllFeedBack, headers, HttpStatus.OK);
 		return response;
 	}
 	
+	@DeleteMapping("/deletefeedbackbyid/{feedbackId}")
+	public ResponseEntity<FeedBack> deleteFeedback(@PathVariable(name = "feedbackId") int feedbackId) {
+		LOG.info("Controller deletefeedbackById");
+		FeedBack sch = feedbackService.deleteFeedback(feedbackId);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "Scheme having id \""+ feedbackId +"\" deleted successfully.");
+		LOG.info(headers.toString());
+		ResponseEntity<FeedBack> response = new ResponseEntity<>(sch, headers, HttpStatus.OK);
+		return response;
+	}
+//	// -------------------------------------------------------------------------------------------
+//	@GetMapping("/viewFeedBackBySchemeName")
+//	public ResponseEntity<List<FeedBack>> viewFeedBackBySchemeName(String SchemeName) {
+//		LOG.info("Controller viewFeedBackBySchemeName");
+//		List<FeedBack> viewFeedBackBySchemeName = feedbackService.viewFeedBackBySchemeName();
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("message", "Data of feedback with " + SchemeName + " retrived successfully from the database");
+//		LOG.info(headers.toString());
+//		ResponseEntity<List<FeedBack>> response = new ResponseEntity<List<FeedBack>>(viewFeedBackBySchemeName, headers,
+//				HttpStatus.OK);
+//		return response;
+//	}
+	// -------------------------------------------------------------------------------------------
+
+//	@GetMapping("/viewFeedBackByTrainingCourseName")
+//	public ResponseEntity<List<FeedBack>> viewFeedBackByTrainingCourseName(String TrainingCourseName) {
+//		LOG.info("Controller viewFeedBackByTrainingCourseName");
+//		List<FeedBack> viewFeedBackByTrainingCourseName = feedbackService.viewFeedBackByTrainingCourseName();
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("message",
+//				"Data of feedback with " + TrainingCourseName + " retrived successfully from the database");
+//		LOG.info(headers.toString());
+//		ResponseEntity<List<FeedBack>> response = new ResponseEntity<>(viewFeedBackByTrainingCourseName, headers, HttpStatus.OK);
+//		return response;
+//	}
+
+	// -------------------------------------------------------------------------------------------
 	
-	
+
 
 }

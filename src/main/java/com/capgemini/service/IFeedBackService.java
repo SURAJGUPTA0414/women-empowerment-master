@@ -15,7 +15,11 @@ public interface IFeedBackService {
 
 	List<FeedBack> viewAllFeedBack();
 
-	List<FeedBack> viewFeedBackBySchemeName();
+	FeedBack deleteFeedback(int feedbackId);
 
-	List<FeedBack> viewFeedBackByTrainingCourseName();
+	
+
+//	List<FeedBack> viewFeedBackBySchemeName();
+//
+//	List<FeedBack> viewFeedBackByTrainingCourseName();
 }
