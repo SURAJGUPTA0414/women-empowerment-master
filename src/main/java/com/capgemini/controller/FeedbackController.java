@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capgemini.exception.FeedBackNotFoundException;
+import com.capgemini.exception.InvalidFieldException;
 import com.capgemini.model.FeedBack;
+import com.capgemini.service.FeedBackService;
 import com.capgemini.service.IFeedBackService;
 
 
@@ -31,144 +34,92 @@ public class FeedbackController {
 
 	@Autowired
 	private IFeedBackService feedbackService;
+//	public ResponseEntity<Trainee>
+	@PostMapping(path = "/feedback")
+	public ResponseEntity<FeedBack> addFeedBack(@RequestBody FeedBack course)
+			throws  FeedBackNotFoundException {
+		ResponseEntity<FeedBack> response = null;
+		FeedBack f = feedbackService.addFeedBack(course);
+		System.out.println("FeedBack add");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "FeedBack added to database");
+		response = new ResponseEntity<FeedBack>(f, headers, HttpStatus.CREATED);
+		return response;
+	}
+	
+	// http://localhost:8082/updateempfeedback
+		@PutMapping("/updatefeedback")
+		public ResponseEntity<FeedBack> updateFeedBack(@RequestBody FeedBack feedback) {
+			LOG.info("updateTrainee");
+			FeedBack updateFeedBack = feedbackService.updateFeedBack(feedback);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", ""+ feedback +" updated successfully");
+			LOG.info(headers.toString());
+			ResponseEntity<FeedBack> response = new ResponseEntity<FeedBack>(updateFeedBack, headers, HttpStatus.OK);
+			return response;
+		}
+	
+		@GetMapping("/viewfeedbackByfeedbackId")
+		public ResponseEntity<FeedBack> viewFeedBack(int feedbackId) {
+			LOG.info("viewTraineeByCourseId");
+			FeedBack viewfeedbackByfeedbackId= feedbackService.viewFeedBack(feedbackId);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", "feedback with "+ feedbackId + " retrived successfully from the database");
+			LOG.info(headers.toString());
+			ResponseEntity<FeedBack> response = new ResponseEntity<FeedBack>(viewfeedbackByfeedbackId, headers, HttpStatus.OK);
+			return response;
+		}
 
-	// http://localhost:8082/getallemps
-	@GetMapping("/viewAllFeedBack")
-	public List<FeedBack> viewAllFeedBack() {
-		LOG.info("viewAllFeedBack"); // in normal block
-		LOG.warn("viewAllFeedBack"); // in normal or exception block
-		LOG.error("viewAllFeedBack"); // in exception block
-//		LOG.debug("viewAllFeedBack"); // in debug mode 
-		return feedbackService.viewAllFeedBack();
+		@GetMapping("/viewFeedBackBySchemeName")
+		public ResponseEntity<List<FeedBack>> viewFeedBackBySchemeName(String SchemeName) {
+			LOG.info("viewTraineeByCourseId");
+			List<FeedBack> viewFeedBackBySchemeName= feedbackService.viewFeedBackBySchemeName();
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", "Data of feedback with "+ SchemeName + " retrived successfully from the database");
+			LOG.info(headers.toString());
+			ResponseEntity<List<FeedBack>> response = new ResponseEntity<List<FeedBack>>(viewFeedBackBySchemeName, headers, HttpStatus.OK);
+			return response;
+		}
+		
+		@GetMapping("/viewFeedBackByTrainingCourseName")
+		public ResponseEntity<List<FeedBack>> viewFeedBackByTrainingCourseName(String TrainingCourseName) {
+			LOG.info("viewTraineeByCourseId");
+			List<FeedBack> viewTraineeByFeedBack= feedbackService.viewFeedBackByTrainingCourseName();
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", "Data of feedback with "+ TrainingCourseName + " retrived successfully from the database");
+			LOG.info(headers.toString());
+			ResponseEntity<List<FeedBack>> response = new ResponseEntity<>(viewTraineeByFeedBack, headers, HttpStatus.OK);
+			return response;
+		}
+
+	@GetMapping("/viewAllfeedback")
+	public ResponseEntity<List<FeedBack>> viewAllFeedBack() 
+	{
+		LOG.info("viewAllTraineesByLocation");
+		List<FeedBack> viewAllFeedBacks=feedbackService.viewAllFeedBack();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "All feedback data retrieved successfully from the database.");
+		LOG.info(headers.toString());
+		ResponseEntity<List<FeedBack>> response = new ResponseEntity<>(viewAllFeedBacks, headers, HttpStatus.OK);
+		return response; 
 	}
 
-//	// returns only employee object (body)
-//	// http://localhost:8082/getempbyid/101
-//	@GetMapping("/getempbyid/{eid}")
-//	public Employee getEmpById(@PathVariable(name = "eid") int eid) {
-//		System.out.println("Controller getEmpById");
-//		return empService.getEmployeeById(eid);
-//	}
 
-////	// returns responseentity object including employee object (body)
-//	// http://localhost:8082/getempbyid/101
-//	@GetMapping("/getempbyid/{eid}")
-//	public ResponseEntity<Employee> getEmpById(@PathVariable(name = "eid") int eid) {
-//		LOG.info("getEmpById");
-//		Employee emp = empService.getEmployeeById(eid);
-//		ResponseEntity<Employee> response = new ResponseEntity<Employee>(emp, HttpStatus.OK);
-//		return response;
-//	}
+	
 
-//// returns responseentity object including employee object (body) and message (header)
-//// http://localhost:8082/getempbyid/101
-//	@GetMapping("/getempbyid/{eid}")
-//	public ResponseEntity<Employee> getEmpById(@PathVariable(name = "eid") int eid) {
-//		LOG.info("getEmpById");
-//		Employee emp = empService.getEmployeeById(eid);
-//		HttpHeaders headers = new HttpHeaders();
-//			headers.add("message", "This employee is available in the database.");
-//			ResponseEntity<Employee> response = new ResponseEntity<Employee>(emp, headers, HttpStatus.OK);
-//	}
-
-//	// returns responseentity object including employee object (body) and (header)
-//	// http://localhost:8082/getempbyid/101
-//	@GetMapping("/getempbyid/{eid}")
-//	public ResponseEntity<Employee> getEmpById(@PathVariable(name = "eid") int eid) {
-//		LOG.info("getEmpById");
-//		Employee emp = empService.getEmployeeById(eid);
-//		HttpHeaders headers = new HttpHeaders();
-//		ResponseEntity<Employee> response;
-//		if (null != emp) {
-//			headers.add("message", "This employee is available in the database.");
-//			LOG.info(headers.toString());
-//			response = new ResponseEntity<Employee>(emp, headers, HttpStatus.OK);
-//			return response;
-//		} else {
-//			headers.add("message", "This employee is NOT available in the database.");
-//			LOG.info(headers.toString());
-//			response = new ResponseEntity<Employee>(emp, headers, HttpStatus.NOT_FOUND);
-//			return response;
-//		}
-//	}
-
-	// returns responseentity object including employee object (body) and (header)
-	// http://localhost:8082/getempbyid/101
-//	@GetMapping("/getempbyid/{eid}")
-//	public ResponseEntity<Employee> getEmpById(@PathVariable(name = "eid") int eid) {
-//		LOG.info("getEmpById");
-//		Employee emp = empService.getEmployeeById(eid); // line
-//		LOG.info(emp.toString());
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("message", "This employee is available in the database.");
-//		LOG.info(headers.toString());
-//		ResponseEntity<Employee> response = new ResponseEntity<Employee>(emp, headers, HttpStatus.OK);
-//		return response;
-//	}
-//
-//	// http://localhost:8082/addemp
-//	@PostMapping("/addemp")
-//	public ResponseEntity<Employee> addEmp(@RequestBody Employee employee) {
-//		System.out.println("Controller addEmp");
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("message", "Employee added successfully.");
-//		return new ResponseEntity<Employee>(empService.addEmployee(employee), headers, HttpStatus.CREATED);
-//	}
-//
-//	// http://localhost:8082/updateemp
-//	@PutMapping("/updateemp")
-//	public Employee updateEmp(@RequestBody Employee employee) {
-//		System.out.println("Controller updateEmp");
-//		return empService.updateEmployee(employee);
-//	}
-//
-//	@DeleteMapping("/deleteempbyid/{eid}")
-//	public ResponseEntity<Employee> deleteEmpById(@PathVariable int eid) {
-//		LOG.info("deleteEmpById");
-//		Employee emp = empService.deleteEmployeeById(eid);
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("message", "Employee deleted successfully.");
-//		ResponseEntity<Employee> response = new ResponseEntity<Employee>(emp, headers, HttpStatus.OK);
-//		return response;
-//	}
-//
-//	@GetMapping("/getbyname/{firstName}")
-//	public List<Employee> getEmpByFirstName(@PathVariable String firstName) {
-//		LOG.info("getEmpByFirstName");
-//		return empService.getEmployeeByFirstName(firstName);
-//	}
-//
-//	@GetMapping("/getbysalbet/{salary1}/{salary1}")
-//	public List<Employee> getEmpBySalaryInBetween(double salary1, double salary2) {
-//		LOG.info("getEmployeeBySalaryInBetween");
-//		return empService.getEmployeeBySalaryInBetween(salary1, salary2);
-//	}
+	
+	@GetMapping("/viewFeedBackByTrainingCourseName")
+	public ResponseEntity<FeedBack> viewFeedBack(String TrainingCourseName) {
+		LOG.info("viewTraineeByCourseId");
+		FeedBack viewTraineeByFeedBack= feedbackService.viewFeedBackByTrainingCourseName();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "Data of feedback with "+ TrainingCourseName + " retrived successfully from the database");
+		LOG.info(headers.toString());
+		ResponseEntity<FeedBack> response = new ResponseEntity<FeedBack>(viewTraineeByFeedBack, headers, HttpStatus.OK);
+		return response;
+	}
+	
+	
+	
 
 }
-
-//@RestController
-//public class EmployeeController {m
-//
-//	@GetMapping("/getemp")
-//	public Employee getEmployee() {
-//		System.out.println("getEmployee");
-//		return new Employee(101, "Sonu", 10.5);
-//	}
-//
-//	@GetMapping("/getallemp")
-//	public List<Employee> getAllEmployees() {
-//		System.out.println("getAllEmployees");
-//		List<Employee> empList = new ArrayList<>();
-//		empList.add(new Employee(101, "Sonu", 10.5));
-//		empList.add(new Employee(102, "Monu", 15.5));
-//		empList.add(new Employee(103, "Tonu", 12.5));
-//		return empList;
-//	}
-//
-////	@RequestMapping("/rrrrr")
-////	@GetMapping("/ggggg")
-////	@PostMapping("/aaaa")
-////	@PutMapping("/ppp")
-////	@DeleteMapping("/ddddd")
-//
-//}

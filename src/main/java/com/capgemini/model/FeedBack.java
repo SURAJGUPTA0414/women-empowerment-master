@@ -30,14 +30,14 @@ public class FeedBack {
 	@Column
 	private	LocalDate feedbackdate;
 	
-	@Column
-	private User user;
-	
-	@Column
-	private TrainingCourse training;
-	
-	@Column
-	private Scheme scheme;
+//	@Column
+//	private User user;
+//	
+//	@Column
+//	private TrainingCourse training;
+//	
+//	@Column
+//	private Scheme scheme;
 	
 
 	
@@ -47,7 +47,7 @@ public class FeedBack {
 	}
 
 	public FeedBack(int feedBackId, int schemeRating, int schemeTrainingRating, int overallRating, String comments,
-			LocalDate feedbackdate, User user, TrainingCourse training, Scheme scheme) {
+			LocalDate feedbackdate) {
 		super();
 		this.feedBackId = feedBackId;
 		this.schemeRating = schemeRating;
@@ -55,10 +55,10 @@ public class FeedBack {
 		this.overallRating = overallRating;
 		this.comments = comments;
 		this.feedbackdate = feedbackdate;
-		this.user = user;
-		this.training = training;
-		this.scheme = scheme;
-		
+//		this.user = user;
+//		this.training = training;
+//		this.scheme = scheme;
+//		
 		
 	}
 
@@ -110,36 +110,44 @@ public class FeedBack {
 		this.feedbackdate = feedbackdate;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public TrainingCourse getTraining() {
-		return training;
-	}
-
-	public void setTraining(TrainingCourse training) {
-		this.training = training;
-	}
-
-	public Scheme getScheme() {
-		return scheme;
-	}
-
-	public void setScheme(Scheme scheme) {
-		this.scheme = scheme;
-	}
-
 	@Override
 	public String toString() {
 		return "FeedBack [feedBackId=" + feedBackId + ", schemeRating=" + schemeRating + ", schemeTrainingRating="
 				+ schemeTrainingRating + ", overallRating=" + overallRating + ", comments=" + comments
-				+ ", feedbackdate=" + feedbackdate + ", user=" + user + ", training=" + training + ", scheme=" + scheme
-				+ "]";
+				+ ", feedbackdate=" + feedbackdate + "]";
 	}
+
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
+//
+//	public TrainingCourse getTraining() {
+//		return training;
+//	}
+//
+//	public void setTraining(TrainingCourse training) {
+//		this.training = training;
+//	}
+//
+//	public Scheme getScheme() {
+//		return scheme;
+//	}
+//
+//	public void setScheme(Scheme scheme) {
+//		this.scheme = scheme;
+//	}
+
+//	@Override
+//	public String toString() {
+//		return "FeedBack [feedBackId=" + feedBackId + ", schemeRating=" + schemeRating + ", schemeTrainingRating="
+//				+ schemeTrainingRating + ", overallRating=" + overallRating + ", comments=" + comments
+//				+ ", feedbackdate=" + feedbackdate + ", user=" + user + ", training=" + training + ", scheme=" + scheme
+//				+ "]";
+//	}
+	
 	
 }
